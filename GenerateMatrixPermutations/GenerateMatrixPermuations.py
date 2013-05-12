@@ -9,6 +9,7 @@ Alex Aylwin
 
 """
 
+
 #flattenMatrix - not used in this script, but this function
 #flattens a matrix into an array
 def flattenMatrix(matrix):
@@ -40,7 +41,7 @@ def souffleArray(array, size):
 #ie a 4x4 matrix should have 16 nested for loops.
 def fill4(min, max):
 	array = []
-	size = 2
+	size = 3
 	for n1 in range(min, max+1):
 		for n2 in range(min, max+1):
 			for n3 in range(min, max+1):
