@@ -9,6 +9,7 @@ Alex Aylwin
 
 """
 
+
 #flattenMatrix - not used in this script, but this function
 #flattens a matrix into an array
 def flattenMatrix(matrix):
