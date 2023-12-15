@@ -1,57 +1,64 @@
-"""
-GenerateMatrixPermuations.py
+# GenerateMatrixPermutations.py
 
-This script can be used to generate all the different permuations of a 2x2 matrix
-with all values within a range of MIN and MAX
-
-Feburary 2013
-Alex Aylwin
-
-"""
-
-#flattenMatrix - not used in this script, but this function
-#flattens a matrix into an array
-def flattenMatrix(matrix):
-	flatArray = []
-	size = len(matrix)
-	for i in range(len):
-		for j in range(len):
-			flatArray.append(matrix[i][j])
-	return flatArray
-
-#souffleArray - this function 'rises' an array into a square matrix,
-#dimensions size x size
+# souffleArray - this function 'rises' an array into a square matrix,
+# dimensions size x size
 def souffleArray(array, size):
-	matrix = []
-	for i in range(size):
-		row = []
-		for j in range(size):
-			row.append(array[(i*size)+j])
-		matrix.append(row)
-	return matrix
+    matrix = []
+    for i in range(size):
+        row = []
+        for j in range(size):
+            row.append(array[(i * size) + j])
+        matrix.append(row)
+    return matrix
 
-#fill 4 - this function is the controller function, that creates the
-#matricies and calls an operator function on each of them. This other
-#function should have side effects that capture the results of whatever
-#calculation needs to be performed
+# fill4 - this function is the controller function, that creates the
+# matrices and calls an operator function on each of them. This other
+# function should have side effects that capture the results of whatever
+# calculation needs to be performed
 
-#To change the size of the matrix (ie, not 2x2) add for loops to match
-#the length of the ARRAY that would come out of flattening the matrix,
-#ie a 4x4 matrix should have 16 nested for loops.
-def fill4(min, max):
-	array = []
-	size = 2
-	for n1 in range(min, max+1):
-		for n2 in range(min, max+1):
-			for n3 in range(min, max+1):
-				for n4 in range(min, max+1):
-					array = [n1,n2,n3,n4]
-					matrix = souffleArray(array, size)
-					doFunctionOnMatrix(matrix)
+# To change the size of the matrix (i.e., not 2x2) add for loops to match
+# the length of the ARRAY that would come out of flattening the matrix,
+# i.e., a 4x4 matrix should have 16 nested for loops.
+def fill4(min, max, size, operation_function):
+    array = []
+    for n1 in range(min, max + 1):
+        for n2 in range(min, max + 1):
+            for n3 in range(min, max + 1):
+                for n4 in range(min, max + 1):
+                    array = [n1, n2, n3, n4]
+                    matrix = souffleArray(array, size)
+                    operation_function(matrix)
 
-#This is the calculation function that actually does some work on the matricies
+# This is the calculation function that actually does some work on the matrices
 def doFunctionOnMatrix(matrix):
-	print(matrix)
+    print(matrix)
+    calculateSum(matrix)
+    calculateProduct(matrix)
 
-#Kick off the calculation, with a range from 0 - 3, inclusive
-fill4(0,3)
+# Calculate and print the sum of each row and each column in the matrix
+def calculateSum(matrix):
+    size = len(matrix)
+    row_sums = [sum(row) for row in matrix]
+    col_sums = [sum(col) for col in zip(*matrix)]
+
+    print(f"Row Sums: {row_sums}")
+    print(f"Column Sums: {col_sums}")
+    print()
+
+# Calculate and print the product of each row and each column in the matrix
+def calculateProduct(matrix):
+    size = len(matrix)
+    row_products = [1] * size  # Initialize with 1 for each row
+    col_products = [1] * size  # Initialize with 1 for each column
+
+    for i in range(size):
+        for j in range(size):
+            row_products[i] *= matrix[i][j]
+            col_products[i] *= matrix[j][i]
+
+    print(f"Row Products: {row_products}")
+    print(f"Column Products: {col_products}")
+    print()
+
+# Kick off the calculation, with a range from a - b, inclusive, and matrix size 2x2
+fill4(1, 6, 2, doFunctionOnMatrix)
